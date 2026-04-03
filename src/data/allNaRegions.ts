@@ -132,3 +132,26 @@ export function buildFullRegionTable(): string {
   }
   return lines.join("\n");
 }
+
+const US_CATEGORY = "United States";
+const US_COLOR = "#2563eb";
+const CANADA_CATEGORY = "Canada";
+const CANADA_COLOR = "#dc2626";
+const MEXICO_CATEGORY = "Mexico";
+const MEXICO_COLOR = "#16a34a";
+
+/** Same regions as `buildFullRegionTable`, with US blue, Canada red, Mexico green. */
+export function buildCountryColoredRegionTable(): string {
+  const header = `State/province\tCategory\tColor`;
+  const lines: string[] = [header];
+  for (const name of US_ATLAS_REGION_NAMES) {
+    lines.push(`${name}\t${US_CATEGORY}\t${US_COLOR}`);
+  }
+  for (const name of CANADA_REGION_NAMES) {
+    lines.push(`${name}\t${CANADA_CATEGORY}\t${CANADA_COLOR}`);
+  }
+  for (const name of MEXICO_REGION_NAMES) {
+    lines.push(`${name}\t${MEXICO_CATEGORY}\t${MEXICO_COLOR}`);
+  }
+  return lines.join("\n");
+}

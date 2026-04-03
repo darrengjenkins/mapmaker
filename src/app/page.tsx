@@ -2,7 +2,10 @@
 
 import { useMemo, useState } from "react";
 import { NorthAmericaMap } from "@/components/NorthAmericaMap";
-import { buildFullRegionTable } from "@/data/allNaRegions";
+import {
+  buildCountryColoredRegionTable,
+  buildFullRegionTable,
+} from "@/data/allNaRegions";
 import { parseTable } from "@/lib/parseTable";
 
 const EXAMPLE = `State/province	Category	Color
@@ -66,13 +69,22 @@ export default function Home() {
               className="min-h-[220px] w-full resize-y rounded-lg border border-zinc-300 bg-white p-3 font-mono text-sm text-zinc-900 shadow-sm outline-none ring-zinc-400 placeholder:text-zinc-400 focus:border-zinc-400 focus:ring-2 dark:border-zinc-700 dark:bg-zinc-900 dark:text-zinc-100 dark:focus:border-zinc-500"
               placeholder={`Ontario\tNE\t#22c55e`}
             />
-            <button
-              type="button"
-              onClick={() => setText(buildFullRegionTable())}
-              className="w-full rounded-lg border border-zinc-300 bg-white px-3 py-2 text-left text-sm font-medium text-zinc-800 shadow-sm hover:bg-zinc-50 dark:border-zinc-600 dark:bg-zinc-900 dark:text-zinc-200 dark:hover:bg-zinc-800"
-            >
-              Fill with all states and provinces
-            </button>
+            <div className="flex flex-col gap-2">
+              <button
+                type="button"
+                onClick={() => setText(buildFullRegionTable())}
+                className="w-full rounded-lg border border-zinc-300 bg-white px-3 py-2 text-left text-sm font-medium text-zinc-800 shadow-sm hover:bg-zinc-50 dark:border-zinc-600 dark:bg-zinc-900 dark:text-zinc-200 dark:hover:bg-zinc-800"
+              >
+                Fill with all states and provinces
+              </button>
+              <button
+                type="button"
+                onClick={() => setText(buildCountryColoredRegionTable())}
+                className="w-full rounded-lg border border-zinc-300 bg-white px-3 py-2 text-left text-sm font-medium text-zinc-800 shadow-sm hover:bg-zinc-50 dark:border-zinc-600 dark:bg-zinc-900 dark:text-zinc-200 dark:hover:bg-zinc-800"
+              >
+                Fill by country — US blue, Canada red, Mexico green
+              </button>
+            </div>
             <p className="text-xs text-zinc-500 dark:text-zinc-400">
               {rows.length} row{rows.length === 1 ? "" : "s"} parsed
               {rows.length === 0 && text.trim().length > 0
