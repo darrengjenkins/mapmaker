@@ -14,9 +14,9 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "North America map maker",
+  title: "mapcreator.org",
   description:
-    "Color US states, Canadian provinces, and Mexican states from a pasted table.",
+    "Create your own color coded maps in seconds. Color North American states and provinces from a simple table.",
 };
 
 export default function RootLayout({

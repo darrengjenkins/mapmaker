@@ -37,10 +37,20 @@ export default function Home() {
   return (
     <div className="min-h-full bg-zinc-50 text-zinc-900 dark:bg-zinc-950 dark:text-zinc-100">
       <div className="mx-auto flex max-w-6xl flex-col gap-8 px-4 py-10 md:px-8">
-        <header className="space-y-2">
-          <h1 className="text-2xl font-semibold tracking-tight md:text-3xl">
-            North America map maker
-          </h1>
+        <header className="space-y-3">
+          <div className="space-y-1">
+            <h1 className="text-3xl font-semibold tracking-tight text-zinc-900 md:text-4xl dark:text-zinc-50">
+              <a
+                href="https://mapcreator.org"
+                className="rounded-sm text-inherit underline-offset-[0.18em] transition-colors hover:text-zinc-700 hover:underline focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-zinc-500 dark:hover:text-zinc-200"
+              >
+                mapcreator.org
+              </a>
+            </h1>
+            <p className="text-base text-zinc-600 md:text-lg dark:text-zinc-400">
+              Create your own color coded maps in seconds
+            </p>
+          </div>
           <p className="max-w-2xl text-sm leading-relaxed text-zinc-600 dark:text-zinc-400">
             Paste a table with three columns: state or province, a short
             category label, and a CSS color (for example hex,{" "}
