@@ -138,6 +138,37 @@ const OIF_MAP_ISO_A3 = new Set([
   ...OIF_ASSOCIATE_MEMBER_ISO_A3,
 ]);
 
+/** European Union member states (27), ISO 3166-1 alpha-3 — post-UK withdrawal. */
+const EU_MEMBER_ISO_A3 = new Set([
+  "AUT",
+  "BEL",
+  "BGR",
+  "HRV",
+  "CYP",
+  "CZE",
+  "DNK",
+  "EST",
+  "FIN",
+  "FRA",
+  "DEU",
+  "GRC",
+  "HUN",
+  "IRL",
+  "ITA",
+  "LVA",
+  "LTU",
+  "LUX",
+  "MLT",
+  "NLD",
+  "POL",
+  "PRT",
+  "ROU",
+  "SVK",
+  "SVN",
+  "ESP",
+  "SWE",
+]);
+
 const MAP_COUNTRY_ISO_A3_TO_NAME: Record<string, string> = {
   ...AMERICAS_COUNTRY_ISO_A3_TO_NAME,
   ...CARIBBEAN_COUNTRY_ISO_A3_TO_NAME,
@@ -358,4 +389,12 @@ export function buildCommonwealthExampleTable(): string {
  */
 export function buildOifFrancophonieExampleTable(): string {
   return buildPerCountryIsoExampleTable(OIF_MAP_ISO_A3);
+}
+
+/**
+ * Example: EU member states on this map — one colour per country. The United
+ * Kingdom and other non‑EU neighbours stay the default fill.
+ */
+export function buildEuMemberExampleTable(): string {
+  return buildPerCountryIsoExampleTable(EU_MEMBER_ISO_A3);
 }

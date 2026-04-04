@@ -8,6 +8,7 @@ import {
 } from "@/data/allNaRegions";
 import {
   buildCommonwealthExampleTable,
+  buildEuMemberExampleTable,
   buildOifFrancophonieExampleTable,
   buildRegionalNorthAmericaExampleTable,
 } from "@/data/exampleMaps";
@@ -159,6 +160,13 @@ export default function Home() {
                 className="w-full rounded-lg border border-zinc-300 bg-white px-3 py-2 text-left text-sm font-medium text-zinc-800 shadow-sm hover:bg-zinc-50 dark:border-zinc-600 dark:bg-zinc-900 dark:text-zinc-200 dark:hover:bg-zinc-800"
               >
                 OIF La Francophonie — full & associate members on the map
+              </button>
+              <button
+                type="button"
+                onClick={() => setText(buildEuMemberExampleTable())}
+                className="w-full rounded-lg border border-zinc-300 bg-white px-3 py-2 text-left text-sm font-medium text-zinc-800 shadow-sm hover:bg-zinc-50 dark:border-zinc-600 dark:bg-zinc-900 dark:text-zinc-200 dark:hover:bg-zinc-800"
+              >
+                European Union — one colour per member state
               </button>
             </div>
             <p className="text-xs text-zinc-500 dark:text-zinc-400">
