@@ -1,14 +1,21 @@
+import { ASIA_COUNTRY_ISO_A3_TO_NAME } from "@/lib/asiaCountryIso";
 import { EUROPE_COUNTRY_ISO_A3_TO_NAME } from "@/lib/europeCountryIso";
 
 /**
  * Names as they appear on the map:
  * us-atlas, Click That Hood Canada, public/geo/mexico-states.json,
- * public/geo/ca-sa-countries.json, public/geo/europe-countries.json.
+ * public/geo/ca-sa-countries.json, public/geo/europe-countries.json,
+ * public/geo/asia-countries.json.
  */
 
 /** Europe (+ Georgia, Cyprus, Turkey, Armenia, Azerbaijan) at country level; labels match `europeCountryIso`. */
 export const EUROPE_COUNTRY_NAMES: readonly string[] = Object.values(
   EUROPE_COUNTRY_ISO_A3_TO_NAME,
+).sort((a, b) => a.localeCompare(b));
+
+/** Asia at country level (excludes Turkey, Georgia, Armenia, Azerbaijan, Cyprus on the Europe layer). */
+export const ASIA_COUNTRY_NAMES: readonly string[] = Object.values(
+  ASIA_COUNTRY_ISO_A3_TO_NAME,
 ).sort((a, b) => a.localeCompare(b));
 
 export const US_ATLAS_REGION_NAMES: readonly string[] = [
@@ -175,6 +182,9 @@ export function buildFullRegionTable(): string {
   for (const name of EUROPE_COUNTRY_NAMES) {
     lines.push(`${name}\t${DEFAULT_CATEGORY}\t${DEFAULT_COLOR}`);
   }
+  for (const name of ASIA_COUNTRY_NAMES) {
+    lines.push(`${name}\t${DEFAULT_CATEGORY}\t${DEFAULT_COLOR}`);
+  }
   return lines.join("\n");
 }
 
@@ -190,6 +200,8 @@ const SOUTH_AMERICA_CATEGORY = "South America";
 const SOUTH_AMERICA_COLOR = "#7c3aed";
 const EUROPE_CATEGORY = "Europe";
 const EUROPE_COLOR = "#0891b2";
+const ASIA_CATEGORY = "Asia";
+const ASIA_COLOR = "#db2777";
 
 /** Same regions as `buildFullRegionTable`, with colors by country grouping. */
 export function buildCountryColoredRegionTable(): string {
@@ -212,6 +224,9 @@ export function buildCountryColoredRegionTable(): string {
   }
   for (const name of EUROPE_COUNTRY_NAMES) {
     lines.push(`${name}\t${EUROPE_CATEGORY}\t${EUROPE_COLOR}`);
+  }
+  for (const name of ASIA_COUNTRY_NAMES) {
+    lines.push(`${name}\t${ASIA_CATEGORY}\t${ASIA_COLOR}`);
   }
   return lines.join("\n");
 }

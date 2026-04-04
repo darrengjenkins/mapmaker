@@ -39,13 +39,14 @@ export function NorthAmericaMap({ rows }: NorthAmericaMapProps) {
     let cancelled = false;
     (async () => {
       try {
-        const [usRaw, canada, mexico, caSaCountries, europeCountries] =
+        const [usRaw, canada, mexico, caSaCountries, europeCountries, asiaCountries] =
           await Promise.all([
             fetch(US_TOPO).then((r) => r.json()),
             fetch(CA_GEO).then((r) => r.json()) as Promise<FeatureCollection>,
             fetch("/geo/mexico-states.json").then((r) => r.json()) as Promise<FeatureCollection>,
             fetch("/geo/ca-sa-countries.json").then((r) => r.json()) as Promise<FeatureCollection>,
             fetch("/geo/europe-countries.json").then((r) => r.json()) as Promise<FeatureCollection>,
+            fetch("/geo/asia-countries.json").then((r) => r.json()) as Promise<FeatureCollection>,
           ]);
         if (cancelled) return;
         const usAtlas = usRaw as { objects: { states: object } };
@@ -61,6 +62,7 @@ export function NorthAmericaMap({ rows }: NorthAmericaMapProps) {
             ...mexico.features,
             ...caSaCountries.features,
             ...europeCountries.features,
+            ...asiaCountries.features,
           ],
         };
         setGeo(merged);

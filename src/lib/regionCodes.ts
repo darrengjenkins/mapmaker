@@ -1,10 +1,12 @@
 import { AMERICAS_COUNTRY_ISO_A3_TO_NAME } from "./americasCountryIso";
+import { ASIA_COUNTRY_ISO_A3_TO_NAME } from "./asiaCountryIso";
 import { EUROPE_COUNTRY_ISO_A3_TO_NAME } from "./europeCountryIso";
 import { normalizeRegionName } from "./normalizeRegionName";
 
 const COUNTRY_ISO_A3_TO_NAME: Record<string, string> = {
   ...AMERICAS_COUNTRY_ISO_A3_TO_NAME,
   ...EUROPE_COUNTRY_ISO_A3_TO_NAME,
+  ...ASIA_COUNTRY_ISO_A3_TO_NAME,
 };
 
 /** Two-letter USPS codes → full state / district name (us-atlas / GeoJSON). */
