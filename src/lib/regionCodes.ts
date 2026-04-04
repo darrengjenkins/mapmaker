@@ -1,5 +1,11 @@
 import { AMERICAS_COUNTRY_ISO_A3_TO_NAME } from "./americasCountryIso";
+import { EUROPE_COUNTRY_ISO_A3_TO_NAME } from "./europeCountryIso";
 import { normalizeRegionName } from "./normalizeRegionName";
+
+const COUNTRY_ISO_A3_TO_NAME: Record<string, string> = {
+  ...AMERICAS_COUNTRY_ISO_A3_TO_NAME,
+  ...EUROPE_COUNTRY_ISO_A3_TO_NAME,
+};
 
 /** Two-letter USPS codes → full state / district name (us-atlas / GeoJSON). */
 export const US_STATE_CODE_TO_NAME: Record<string, string> = {
@@ -93,6 +99,7 @@ const RARE_SYNONYMS: Record<string, string[]> = {
   "mexico city": ["distrito federal"],
   malvinas: ["falkland islands"],
   "falkland islas": ["falkland islands"],
+  serbia: ["republic of serbia"],
 };
 
 /**
@@ -115,10 +122,8 @@ export function expandRegionKeys(label: string): string[] {
     keys.add(normalizeRegionName("Prince Edward Island"));
   }
 
-  if (upper3 && AMERICAS_COUNTRY_ISO_A3_TO_NAME[upper3]) {
-    keys.add(
-      normalizeRegionName(AMERICAS_COUNTRY_ISO_A3_TO_NAME[upper3]),
-    );
+  if (upper3 && COUNTRY_ISO_A3_TO_NAME[upper3]) {
+    keys.add(normalizeRegionName(COUNTRY_ISO_A3_TO_NAME[upper3]));
   }
 
   for (const extra of RARE_SYNONYMS[n] ?? []) {

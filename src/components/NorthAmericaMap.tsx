@@ -39,12 +39,14 @@ export function NorthAmericaMap({ rows }: NorthAmericaMapProps) {
     let cancelled = false;
     (async () => {
       try {
-        const [usRaw, canada, mexico, caSaCountries] = await Promise.all([
-          fetch(US_TOPO).then((r) => r.json()),
-          fetch(CA_GEO).then((r) => r.json()) as Promise<FeatureCollection>,
-          fetch("/geo/mexico-states.json").then((r) => r.json()) as Promise<FeatureCollection>,
-          fetch("/geo/ca-sa-countries.json").then((r) => r.json()) as Promise<FeatureCollection>,
-        ]);
+        const [usRaw, canada, mexico, caSaCountries, europeCountries] =
+          await Promise.all([
+            fetch(US_TOPO).then((r) => r.json()),
+            fetch(CA_GEO).then((r) => r.json()) as Promise<FeatureCollection>,
+            fetch("/geo/mexico-states.json").then((r) => r.json()) as Promise<FeatureCollection>,
+            fetch("/geo/ca-sa-countries.json").then((r) => r.json()) as Promise<FeatureCollection>,
+            fetch("/geo/europe-countries.json").then((r) => r.json()) as Promise<FeatureCollection>,
+          ]);
         if (cancelled) return;
         const usAtlas = usRaw as { objects: { states: object } };
         const usFc = feature(
@@ -58,6 +60,7 @@ export function NorthAmericaMap({ rows }: NorthAmericaMapProps) {
             ...canada.features,
             ...mexico.features,
             ...caSaCountries.features,
+            ...europeCountries.features,
           ],
         };
         setGeo(merged);

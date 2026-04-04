@@ -16,7 +16,7 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   title: "mapcreator.org",
   description:
-    "Create your own color coded maps in seconds. Color North American subdivisions and Central and South American countries from a simple table.",
+    "Create your own color coded maps in seconds. Color North American subdivisions, Americas countries, and European countries from a simple table.",
 };
 
 export default function RootLayout({

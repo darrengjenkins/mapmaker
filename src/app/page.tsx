@@ -59,8 +59,9 @@ export default function Home() {
             </code>
             , or color names). Tabs, commas, or spaces work between columns.
             US states (including DC and territories on the map), Canadian
-            provinces and territories, Mexican states, and Central and South
-            American countries (whole country, not subdivisions) are supported.
+            provinces and territories, Mexican states, Central and South
+            American countries, and European countries (whole country, not
+            subdivisions) are supported.
           </p>
         </header>
 
@@ -94,7 +95,7 @@ export default function Home() {
                 className="w-full rounded-lg border border-zinc-300 bg-white px-3 py-2 text-left text-sm font-medium text-zinc-800 shadow-sm hover:bg-zinc-50 dark:border-zinc-600 dark:bg-zinc-900 dark:text-zinc-200 dark:hover:bg-zinc-800"
               >
                 Fill by region group — US blue, Canada red, Mexico green,
-                Central America orange, South America purple
+                Central America orange, South America purple, Europe cyan
               </button>
             </div>
             <p className="text-xs text-zinc-500 dark:text-zinc-400">
