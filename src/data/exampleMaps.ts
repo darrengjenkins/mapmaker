@@ -4,7 +4,11 @@ import { ASIA_COUNTRY_ISO_A3_TO_NAME } from "@/lib/asiaCountryIso";
 import { CARIBBEAN_COUNTRY_ISO_A3_TO_NAME } from "@/lib/caribbeanCountryIso";
 import { EUROPE_COUNTRY_ISO_A3_TO_NAME } from "@/lib/europeCountryIso";
 import { OCEANIA_COUNTRY_ISO_A3_TO_NAME } from "@/lib/oceaniaCountryIso";
-import { CANADA_REGION_NAMES, MEXICO_REGION_NAMES } from "./allNaRegions";
+import {
+  CANADA_REGION_NAMES,
+  MEXICO_REGION_NAMES,
+  US_ATLAS_REGION_NAMES,
+} from "./allNaRegions";
 
 /** Sovereign members of the Commonwealth of Nations (ISO 3166-1 alpha-3). */
 const COMMONWEALTH_MEMBER_ISO_A3 = new Set([
@@ -167,6 +171,46 @@ const EU_MEMBER_ISO_A3 = new Set([
   "SVN",
   "ESP",
   "SWE",
+]);
+
+/** ASEAN member states (includes Timor-Leste from October 2025). */
+const ASEAN_MEMBER_ISO_A3 = new Set([
+  "BRN",
+  "KHM",
+  "IDN",
+  "LAO",
+  "MYS",
+  "MMR",
+  "PHL",
+  "SGP",
+  "THA",
+  "TLS",
+  "VNM",
+]);
+
+/** APEC member economies (Chinese Taipei = Taiwan on this map). */
+const APEC_MEMBER_ISO_A3 = new Set([
+  "AUS",
+  "BRN",
+  "CAN",
+  "CHL",
+  "CHN",
+  "HKG",
+  "IDN",
+  "JPN",
+  "KOR",
+  "MYS",
+  "MEX",
+  "NZL",
+  "PNG",
+  "PER",
+  "PHL",
+  "RUS",
+  "SGP",
+  "THA",
+  "TWN",
+  "USA",
+  "VNM",
 ]);
 
 const MAP_COUNTRY_ISO_A3_TO_NAME: Record<string, string> = {
@@ -397,4 +441,61 @@ export function buildOifFrancophonieExampleTable(): string {
  */
 export function buildEuMemberExampleTable(): string {
   return buildPerCountryIsoExampleTable(EU_MEMBER_ISO_A3);
+}
+
+const ASEAN_APEC_BOTH_CATEGORY = "ASEAN & APEC";
+const ASEAN_APEC_BOTH_COLOR = "#5b21b6";
+const ASEAN_ONLY_CATEGORY = "ASEAN only";
+const ASEAN_ONLY_COLOR = "#047857";
+const APEC_ONLY_CATEGORY = "APEC only";
+const APEC_ONLY_COLOR = "#c2410c";
+
+function aseanApecClassify(
+  iso: string,
+): "both" | "asean_only" | "apec_only" | null {
+  const a = ASEAN_MEMBER_ISO_A3.has(iso);
+  const p = APEC_MEMBER_ISO_A3.has(iso);
+  if (a && p) return "both";
+  if (a) return "asean_only";
+  if (p) return "apec_only";
+  return null;
+}
+
+/**
+ * ASEAN vs APEC overlap: three colours — members of both organisations,
+ * ASEAN-only, and APEC-only (including US states, Canadian provinces, and
+ * Mexican states for the APEC economies United States, Canada, and Mexico).
+ */
+export function buildAseanApecExampleTable(): string {
+  const header = `Region\tCategory\tColor`;
+  const lines: string[] = [];
+
+  const pushRow = (region: string, kind: "both" | "asean_only" | "apec_only") => {
+    if (kind === "both") {
+      lines.push(
+        `${region}\t${ASEAN_APEC_BOTH_CATEGORY}\t${ASEAN_APEC_BOTH_COLOR}`,
+      );
+    } else if (kind === "asean_only") {
+      lines.push(`${region}\t${ASEAN_ONLY_CATEGORY}\t${ASEAN_ONLY_COLOR}`);
+    } else {
+      lines.push(`${region}\t${APEC_ONLY_CATEGORY}\t${APEC_ONLY_COLOR}`);
+    }
+  };
+
+  for (const [iso, label] of Object.entries(MAP_COUNTRY_ISO_A3_TO_NAME)) {
+    const k = aseanApecClassify(iso);
+    if (k) pushRow(label, k);
+  }
+
+  for (const name of US_ATLAS_REGION_NAMES) {
+    pushRow(name, "apec_only");
+  }
+  for (const name of CANADA_REGION_NAMES) {
+    pushRow(name, "apec_only");
+  }
+  for (const name of MEXICO_REGION_NAMES) {
+    pushRow(name, "apec_only");
+  }
+
+  return [header, ...lines].join("\n");
 }

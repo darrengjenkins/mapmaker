@@ -7,6 +7,7 @@ import {
   buildFullRegionTable,
 } from "@/data/allNaRegions";
 import {
+  buildAseanApecExampleTable,
   buildCommonwealthExampleTable,
   buildEuMemberExampleTable,
   buildOifFrancophonieExampleTable,
@@ -167,6 +168,13 @@ export default function Home() {
                 className="w-full rounded-lg border border-zinc-300 bg-white px-3 py-2 text-left text-sm font-medium text-zinc-800 shadow-sm hover:bg-zinc-50 dark:border-zinc-600 dark:bg-zinc-900 dark:text-zinc-200 dark:hover:bg-zinc-800"
               >
                 European Union — one colour per member state
+              </button>
+              <button
+                type="button"
+                onClick={() => setText(buildAseanApecExampleTable())}
+                className="w-full rounded-lg border border-zinc-300 bg-white px-3 py-2 text-left text-sm font-medium text-zinc-800 shadow-sm hover:bg-zinc-50 dark:border-zinc-600 dark:bg-zinc-900 dark:text-zinc-200 dark:hover:bg-zinc-800"
+              >
+                ASEAN & APEC — both, ASEAN-only, and APEC-only
               </button>
             </div>
             <p className="text-xs text-zinc-500 dark:text-zinc-400">
