@@ -1,7 +1,9 @@
 import { AMERICAS_COUNTRY_ISO_A3_TO_NAME } from "./americasCountryIso";
 import { AFRICA_COUNTRY_ISO_A3_TO_NAME } from "./africaCountryIso";
 import { ASIA_COUNTRY_ISO_A3_TO_NAME } from "./asiaCountryIso";
+import { CARIBBEAN_COUNTRY_ISO_A3_TO_NAME } from "./caribbeanCountryIso";
 import { EUROPE_COUNTRY_ISO_A3_TO_NAME } from "./europeCountryIso";
+import { OCEANIA_COUNTRY_ISO_A3_TO_NAME } from "./oceaniaCountryIso";
 import { normalizeRegionName } from "./normalizeRegionName";
 
 const COUNTRY_ISO_A3_TO_NAME: Record<string, string> = {
@@ -9,6 +11,8 @@ const COUNTRY_ISO_A3_TO_NAME: Record<string, string> = {
   ...EUROPE_COUNTRY_ISO_A3_TO_NAME,
   ...ASIA_COUNTRY_ISO_A3_TO_NAME,
   ...AFRICA_COUNTRY_ISO_A3_TO_NAME,
+  ...OCEANIA_COUNTRY_ISO_A3_TO_NAME,
+  ...CARIBBEAN_COUNTRY_ISO_A3_TO_NAME,
 };
 
 /** Two-letter USPS codes → full state / district name (us-atlas / GeoJSON). */
@@ -108,6 +112,7 @@ const RARE_SYNONYMS: Record<string, string[]> = {
   "cape verde": ["Cabo Verde"],
   drc: ["democratic republic of the congo"],
   "dr congo": ["democratic republic of the congo"],
+  bahamas: ["the bahamas"],
 };
 
 /**

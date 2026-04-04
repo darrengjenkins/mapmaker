@@ -1,13 +1,21 @@
 import { AFRICA_COUNTRY_ISO_A3_TO_NAME } from "@/lib/africaCountryIso";
 import { ASIA_COUNTRY_ISO_A3_TO_NAME } from "@/lib/asiaCountryIso";
+import { CARIBBEAN_COUNTRY_ISO_A3_TO_NAME } from "@/lib/caribbeanCountryIso";
 import { EUROPE_COUNTRY_ISO_A3_TO_NAME } from "@/lib/europeCountryIso";
+import { OCEANIA_COUNTRY_ISO_A3_TO_NAME } from "@/lib/oceaniaCountryIso";
 
 /**
  * Names as they appear on the map:
  * us-atlas, Click That Hood Canada, public/geo/mexico-states.json,
  * public/geo/ca-sa-countries.json, public/geo/europe-countries.json,
- * public/geo/asia-countries.json, public/geo/africa-countries.json.
+ * public/geo/asia-countries.json, public/geo/africa-countries.json,
+ * public/geo/oceania-countries.json, public/geo/caribbean-countries.json.
  */
+
+/** Caribbean (Natural Earth SUBREGION; Puerto Rico & USVI omitted — US atlas). */
+export const CARIBBEAN_COUNTRY_NAMES: readonly string[] = Object.values(
+  CARIBBEAN_COUNTRY_ISO_A3_TO_NAME,
+).sort((a, b) => a.localeCompare(b));
 
 /** Europe (+ Georgia, Cyprus, Turkey, Armenia, Azerbaijan) at country level; labels match `europeCountryIso`. */
 export const EUROPE_COUNTRY_NAMES: readonly string[] = Object.values(
@@ -22,6 +30,11 @@ export const ASIA_COUNTRY_NAMES: readonly string[] = Object.values(
 /** Africa at country level; labels match `africaCountryIso`. */
 export const AFRICA_COUNTRY_NAMES: readonly string[] = Object.values(
   AFRICA_COUNTRY_ISO_A3_TO_NAME,
+).sort((a, b) => a.localeCompare(b));
+
+/** Oceania at country level (Guam, American Samoa, N. Mariana omitted — US atlas). */
+export const OCEANIA_COUNTRY_NAMES: readonly string[] = Object.values(
+  OCEANIA_COUNTRY_ISO_A3_TO_NAME,
 ).sort((a, b) => a.localeCompare(b));
 
 export const US_ATLAS_REGION_NAMES: readonly string[] = [
@@ -182,6 +195,9 @@ export function buildFullRegionTable(): string {
   for (const name of CENTRAL_AMERICA_COUNTRY_NAMES) {
     lines.push(`${name}\t${DEFAULT_CATEGORY}\t${DEFAULT_COLOR}`);
   }
+  for (const name of CARIBBEAN_COUNTRY_NAMES) {
+    lines.push(`${name}\t${DEFAULT_CATEGORY}\t${DEFAULT_COLOR}`);
+  }
   for (const name of SOUTH_AMERICA_COUNTRY_NAMES) {
     lines.push(`${name}\t${DEFAULT_CATEGORY}\t${DEFAULT_COLOR}`);
   }
@@ -192,6 +208,9 @@ export function buildFullRegionTable(): string {
     lines.push(`${name}\t${DEFAULT_CATEGORY}\t${DEFAULT_COLOR}`);
   }
   for (const name of AFRICA_COUNTRY_NAMES) {
+    lines.push(`${name}\t${DEFAULT_CATEGORY}\t${DEFAULT_COLOR}`);
+  }
+  for (const name of OCEANIA_COUNTRY_NAMES) {
     lines.push(`${name}\t${DEFAULT_CATEGORY}\t${DEFAULT_COLOR}`);
   }
   return lines.join("\n");
@@ -205,6 +224,8 @@ const MEXICO_CATEGORY = "Mexico";
 const MEXICO_COLOR = "#16a34a";
 const CENTRAL_AMERICA_CATEGORY = "Central America";
 const CENTRAL_AMERICA_COLOR = "#ea580c";
+const CARIBBEAN_CATEGORY = "Caribbean";
+const CARIBBEAN_COLOR = "#0d9488";
 const SOUTH_AMERICA_CATEGORY = "South America";
 const SOUTH_AMERICA_COLOR = "#7c3aed";
 const EUROPE_CATEGORY = "Europe";
@@ -213,6 +234,8 @@ const ASIA_CATEGORY = "Asia";
 const ASIA_COLOR = "#db2777";
 const AFRICA_CATEGORY = "Africa";
 const AFRICA_COLOR = "#047857";
+const OCEANIA_CATEGORY = "Oceania";
+const OCEANIA_COLOR = "#0369a1";
 
 /** Same regions as `buildFullRegionTable`, with colors by country grouping. */
 export function buildCountryColoredRegionTable(): string {
@@ -230,6 +253,9 @@ export function buildCountryColoredRegionTable(): string {
   for (const name of CENTRAL_AMERICA_COUNTRY_NAMES) {
     lines.push(`${name}\t${CENTRAL_AMERICA_CATEGORY}\t${CENTRAL_AMERICA_COLOR}`);
   }
+  for (const name of CARIBBEAN_COUNTRY_NAMES) {
+    lines.push(`${name}\t${CARIBBEAN_CATEGORY}\t${CARIBBEAN_COLOR}`);
+  }
   for (const name of SOUTH_AMERICA_COUNTRY_NAMES) {
     lines.push(`${name}\t${SOUTH_AMERICA_CATEGORY}\t${SOUTH_AMERICA_COLOR}`);
   }
@@ -241,6 +267,9 @@ export function buildCountryColoredRegionTable(): string {
   }
   for (const name of AFRICA_COUNTRY_NAMES) {
     lines.push(`${name}\t${AFRICA_CATEGORY}\t${AFRICA_COLOR}`);
+  }
+  for (const name of OCEANIA_COUNTRY_NAMES) {
+    lines.push(`${name}\t${OCEANIA_CATEGORY}\t${OCEANIA_COLOR}`);
   }
   return lines.join("\n");
 }

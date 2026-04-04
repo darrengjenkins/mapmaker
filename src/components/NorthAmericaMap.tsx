@@ -47,6 +47,8 @@ export function NorthAmericaMap({ rows }: NorthAmericaMapProps) {
           europeCountries,
           asiaCountries,
           africaCountries,
+          oceaniaCountries,
+          caribbeanCountries,
         ] = await Promise.all([
           fetch(US_TOPO).then((r) => r.json()),
           fetch(CA_GEO).then((r) => r.json()) as Promise<FeatureCollection>,
@@ -55,6 +57,8 @@ export function NorthAmericaMap({ rows }: NorthAmericaMapProps) {
           fetch("/geo/europe-countries.json").then((r) => r.json()) as Promise<FeatureCollection>,
           fetch("/geo/asia-countries.json").then((r) => r.json()) as Promise<FeatureCollection>,
           fetch("/geo/africa-countries.json").then((r) => r.json()) as Promise<FeatureCollection>,
+          fetch("/geo/oceania-countries.json").then((r) => r.json()) as Promise<FeatureCollection>,
+          fetch("/geo/caribbean-countries.json").then((r) => r.json()) as Promise<FeatureCollection>,
         ]);
         if (cancelled) return;
         const usAtlas = usRaw as { objects: { states: object } };
@@ -69,9 +73,11 @@ export function NorthAmericaMap({ rows }: NorthAmericaMapProps) {
             ...canada.features,
             ...mexico.features,
             ...caSaCountries.features,
+            ...caribbeanCountries.features,
             ...europeCountries.features,
             ...asiaCountries.features,
             ...africaCountries.features,
+            ...oceaniaCountries.features,
           ],
         };
         setGeo(merged);
