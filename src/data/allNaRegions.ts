@@ -1,6 +1,7 @@
 /**
- * Names as they appear in map boundaries (us-atlas, Click That Hood Canada,
- * public/geo/mexico-states.json) so pasted rows resolve correctly.
+ * Names as they appear on the map:
+ * us-atlas, Click That Hood Canada, public/geo/mexico-states.json,
+ * public/geo/ca-sa-countries.json (Natural Earth admin-0, `name` = `ADMIN`).
  */
 
 export const US_ATLAS_REGION_NAMES: readonly string[] = [
@@ -113,13 +114,41 @@ export const MEXICO_REGION_NAMES: readonly string[] = [
   "Zacatecas",
 ];
 
+/** Country-level boundaries (Central America). Mexico / US / Canada excluded — subdivisions used instead. */
+export const CENTRAL_AMERICA_COUNTRY_NAMES: readonly string[] = [
+  "Belize",
+  "Costa Rica",
+  "El Salvador",
+  "Guatemala",
+  "Honduras",
+  "Nicaragua",
+  "Panama",
+];
+
+/** Country-level boundaries (South America). */
+export const SOUTH_AMERICA_COUNTRY_NAMES: readonly string[] = [
+  "Argentina",
+  "Bolivia",
+  "Brazil",
+  "Chile",
+  "Colombia",
+  "Ecuador",
+  "Falkland Islands",
+  "Guyana",
+  "Paraguay",
+  "Peru",
+  "Suriname",
+  "Uruguay",
+  "Venezuela",
+];
+
 const DEFAULT_CATEGORY = "-";
 /** Same default fill as unmatched regions on the map. */
 const DEFAULT_COLOR = "#e4e4e7";
 
 /** Tab-separated table with header: every US division on the map, then Canada, then Mexico. */
 export function buildFullRegionTable(): string {
-  const header = `State/province\tCategory\tColor`;
+  const header = `Region\tCategory\tColor`;
   const lines: string[] = [header];
   for (const name of US_ATLAS_REGION_NAMES) {
     lines.push(`${name}\t${DEFAULT_CATEGORY}\t${DEFAULT_COLOR}`);
@@ -128,6 +157,12 @@ export function buildFullRegionTable(): string {
     lines.push(`${name}\t${DEFAULT_CATEGORY}\t${DEFAULT_COLOR}`);
   }
   for (const name of MEXICO_REGION_NAMES) {
+    lines.push(`${name}\t${DEFAULT_CATEGORY}\t${DEFAULT_COLOR}`);
+  }
+  for (const name of CENTRAL_AMERICA_COUNTRY_NAMES) {
+    lines.push(`${name}\t${DEFAULT_CATEGORY}\t${DEFAULT_COLOR}`);
+  }
+  for (const name of SOUTH_AMERICA_COUNTRY_NAMES) {
     lines.push(`${name}\t${DEFAULT_CATEGORY}\t${DEFAULT_COLOR}`);
   }
   return lines.join("\n");
@@ -139,10 +174,14 @@ const CANADA_CATEGORY = "Canada";
 const CANADA_COLOR = "#dc2626";
 const MEXICO_CATEGORY = "Mexico";
 const MEXICO_COLOR = "#16a34a";
+const CENTRAL_AMERICA_CATEGORY = "Central America";
+const CENTRAL_AMERICA_COLOR = "#ea580c";
+const SOUTH_AMERICA_CATEGORY = "South America";
+const SOUTH_AMERICA_COLOR = "#7c3aed";
 
-/** Same regions as `buildFullRegionTable`, with US blue, Canada red, Mexico green. */
+/** Same regions as `buildFullRegionTable`, with colors by country grouping. */
 export function buildCountryColoredRegionTable(): string {
-  const header = `State/province\tCategory\tColor`;
+  const header = `Region\tCategory\tColor`;
   const lines: string[] = [header];
   for (const name of US_ATLAS_REGION_NAMES) {
     lines.push(`${name}\t${US_CATEGORY}\t${US_COLOR}`);
@@ -152,6 +191,12 @@ export function buildCountryColoredRegionTable(): string {
   }
   for (const name of MEXICO_REGION_NAMES) {
     lines.push(`${name}\t${MEXICO_CATEGORY}\t${MEXICO_COLOR}`);
+  }
+  for (const name of CENTRAL_AMERICA_COUNTRY_NAMES) {
+    lines.push(`${name}\t${CENTRAL_AMERICA_CATEGORY}\t${CENTRAL_AMERICA_COLOR}`);
+  }
+  for (const name of SOUTH_AMERICA_COUNTRY_NAMES) {
+    lines.push(`${name}\t${SOUTH_AMERICA_CATEGORY}\t${SOUTH_AMERICA_COLOR}`);
   }
   return lines.join("\n");
 }

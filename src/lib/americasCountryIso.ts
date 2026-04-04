@@ -1,0 +1,23 @@
+/** ISO 3166-1 alpha-3 codes for Central & South American countries on the map (avoids ISO-2 clashes with US/CA). */
+export const AMERICAS_COUNTRY_ISO_A3_TO_NAME: Record<string, string> = {
+  ARG: "Argentina",
+  BLZ: "Belize",
+  BOL: "Bolivia",
+  BRA: "Brazil",
+  CHL: "Chile",
+  COL: "Colombia",
+  CRI: "Costa Rica",
+  ECU: "Ecuador",
+  SLV: "El Salvador",
+  FLK: "Falkland Islands",
+  GTM: "Guatemala",
+  GUY: "Guyana",
+  HND: "Honduras",
+  NIC: "Nicaragua",
+  PAN: "Panama",
+  PRY: "Paraguay",
+  PER: "Peru",
+  SUR: "Suriname",
+  URY: "Uruguay",
+  VEN: "Venezuela",
+};

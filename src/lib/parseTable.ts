@@ -8,7 +8,8 @@ export type RegionRow = {
 
 export type StyledRegion = RegionRow & { keys: string[] };
 
-const HEADER_RE = /^(state|province|region|subdivision)\b/i;
+const HEADER_RE =
+  /^(state|province|region|subdivision|country)\b/i;
 
 function splitTableLine(line: string): string[] {
   if (line.includes("\t")) {

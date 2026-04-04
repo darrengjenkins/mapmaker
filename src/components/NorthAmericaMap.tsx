@@ -18,8 +18,8 @@ const US_TOPO =
 const CA_GEO =
   "https://raw.githubusercontent.com/codeforamerica/click_that_hood/master/public/data/canada.geojson";
 
-/** Geographic center for initial view (lon, lat) — matches projectionConfig on ComposableMap. */
-const MAP_CENTER: [number, number] = [-98, 42];
+/** Geographic center for initial view (lon, lat) — framed for North America through South America. */
+const MAP_CENTER: [number, number] = [-88, 16];
 const ZOOM_MIN = 0.4;
 const ZOOM_MAX = 12;
 
@@ -39,10 +39,11 @@ export function NorthAmericaMap({ rows }: NorthAmericaMapProps) {
     let cancelled = false;
     (async () => {
       try {
-        const [usRaw, canada, mexico] = await Promise.all([
+        const [usRaw, canada, mexico, caSaCountries] = await Promise.all([
           fetch(US_TOPO).then((r) => r.json()),
           fetch(CA_GEO).then((r) => r.json()) as Promise<FeatureCollection>,
           fetch("/geo/mexico-states.json").then((r) => r.json()) as Promise<FeatureCollection>,
+          fetch("/geo/ca-sa-countries.json").then((r) => r.json()) as Promise<FeatureCollection>,
         ]);
         if (cancelled) return;
         const usAtlas = usRaw as { objects: { states: object } };
@@ -56,6 +57,7 @@ export function NorthAmericaMap({ rows }: NorthAmericaMapProps) {
             ...usFc.features,
             ...canada.features,
             ...mexico.features,
+            ...caSaCountries.features,
           ],
         };
         setGeo(merged);
@@ -142,7 +144,7 @@ export function NorthAmericaMap({ rows }: NorthAmericaMapProps) {
           projection="geoMercator"
           projectionConfig={{
             center: MAP_CENTER,
-            scale: 360,
+            scale: 320,
           }}
           width={880}
           height={560}
@@ -163,7 +165,8 @@ export function NorthAmericaMap({ rows }: NorthAmericaMapProps) {
             <Geographies geography={geo}>
               {({ geographies }) =>
                 geographies.map((g) => {
-                  const name = String(g.properties?.name ?? "");
+                  const p = g.properties as Record<string, unknown> | undefined;
+                  const name = String(p?.name ?? p?.ADMIN ?? "");
                   const nk = normalizeRegionName(name);
                   const style = lookup.get(nk);
                   const fill = style?.color?.trim() || defaultFill;

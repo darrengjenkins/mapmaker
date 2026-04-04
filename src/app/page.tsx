@@ -8,7 +8,7 @@ import {
 } from "@/data/allNaRegions";
 import { parseTable } from "@/lib/parseTable";
 
-const EXAMPLE = `State/province	Category	Color
+const EXAMPLE = `Region	Category	Color
 California	NW	#2563eb
 Texas	SW	#dc2626
 Ontario	NE	#16a34a
@@ -52,14 +52,15 @@ export default function Home() {
             </p>
           </div>
           <p className="max-w-2xl text-sm leading-relaxed text-zinc-600 dark:text-zinc-400">
-            Paste a table with three columns: state or province, a short
-            category label, and a CSS color (for example hex,{" "}
+            Paste a table with three columns: region (state, province, or
+            country), a short category label, and a CSS color (for example hex,{" "}
             <code className="rounded bg-zinc-200 px-1 py-0.5 text-xs dark:bg-zinc-800">
               rgb()
             </code>
             , or color names). Tabs, commas, or spaces work between columns.
-            US states (including DC and Puerto Rico), Canadian provinces and
-            territories, and Mexican states are supported.
+            US states (including DC and territories on the map), Canadian
+            provinces and territories, Mexican states, and Central and South
+            American countries (whole country, not subdivisions) are supported.
           </p>
         </header>
 
@@ -92,7 +93,8 @@ export default function Home() {
                 onClick={() => setText(buildCountryColoredRegionTable())}
                 className="w-full rounded-lg border border-zinc-300 bg-white px-3 py-2 text-left text-sm font-medium text-zinc-800 shadow-sm hover:bg-zinc-50 dark:border-zinc-600 dark:bg-zinc-900 dark:text-zinc-200 dark:hover:bg-zinc-800"
               >
-                Fill by country — US blue, Canada red, Mexico green
+                Fill by region group — US blue, Canada red, Mexico green,
+                Central America orange, South America purple
               </button>
             </div>
             <p className="text-xs text-zinc-500 dark:text-zinc-400">

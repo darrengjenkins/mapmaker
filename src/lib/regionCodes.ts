@@ -1,3 +1,4 @@
+import { AMERICAS_COUNTRY_ISO_A3_TO_NAME } from "./americasCountryIso";
 import { normalizeRegionName } from "./normalizeRegionName";
 
 /** Two-letter USPS codes → full state / district name (us-atlas / GeoJSON). */
@@ -90,6 +91,8 @@ const RARE_SYNONYMS: Record<string, string[]> = {
   edomex: ["méxico"],
   cdmx: ["distrito federal"],
   "mexico city": ["distrito federal"],
+  malvinas: ["falkland islands"],
+  "falkland islas": ["falkland islands"],
 };
 
 /**
@@ -110,6 +113,12 @@ export function expandRegionKeys(label: string): string[] {
 
   if (upper3 === "PEI") {
     keys.add(normalizeRegionName("Prince Edward Island"));
+  }
+
+  if (upper3 && AMERICAS_COUNTRY_ISO_A3_TO_NAME[upper3]) {
+    keys.add(
+      normalizeRegionName(AMERICAS_COUNTRY_ISO_A3_TO_NAME[upper3]),
+    );
   }
 
   for (const extra of RARE_SYNONYMS[n] ?? []) {
