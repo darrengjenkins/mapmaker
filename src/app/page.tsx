@@ -96,7 +96,7 @@ export default function Home() {
             </ol>
             <p className="text-xs leading-relaxed text-zinc-500 dark:text-zinc-400">
               Each row needs three columns: region, category, and color. Use
-              tabs, commas, or spaces between columns. Regions can be US states
+              tabs between columns. Regions can be US states
               and territories on the map, Canadian provinces and territories,
               Mexican states, Central American, Caribbean, and South American
               countries, and European, Asian, African, and Oceania countries
