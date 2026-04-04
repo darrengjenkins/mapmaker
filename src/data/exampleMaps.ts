@@ -242,6 +242,49 @@ const OPEC_MEMBER_ISO_A3 = new Set([
   "VEN",
 ]);
 
+/**
+ * NATO accession calendar year per member (ISO alpha-3). Founding: 4 April
+ * 1949. Germany: Federal Republic joined 1955; Spain 1982; Czechia/Hungary/Poland
+ * 1999; 2004 wave; Albania/Croatia 2009; Montenegro 2017; North Macedonia 2020;
+ * Finland 2023; Sweden 2024.
+ */
+const NATO_ACCESSION_YEAR: Record<string, number> = {
+  ALB: 2009,
+  BEL: 1949,
+  BGR: 2004,
+  CAN: 1949,
+  HRV: 2009,
+  CZE: 1999,
+  DNK: 1949,
+  EST: 2004,
+  FIN: 2023,
+  FRA: 1949,
+  DEU: 1955,
+  GRC: 1952,
+  HUN: 1999,
+  ISL: 1949,
+  ITA: 1949,
+  LVA: 2004,
+  LTU: 2004,
+  LUX: 1949,
+  MNE: 2017,
+  NLD: 1949,
+  MKD: 2020,
+  NOR: 1949,
+  POL: 1999,
+  PRT: 1949,
+  ROU: 2004,
+  SVK: 2004,
+  SVN: 2004,
+  ESP: 1982,
+  SWE: 2024,
+  TUR: 1952,
+  GBR: 1949,
+  USA: 1949,
+};
+
+const NATO_MEMBER_ISO_A3 = new Set(Object.keys(NATO_ACCESSION_YEAR));
+
 const MAP_COUNTRY_ISO_A3_TO_NAME: Record<string, string> = {
   ...AMERICAS_COUNTRY_ISO_A3_TO_NAME,
   ...CARIBBEAN_COUNTRY_ISO_A3_TO_NAME,
@@ -411,13 +454,23 @@ export function buildRegionalNorthAmericaExampleTable(): string {
 
 type CountryExampleSortEntry =
   | { kind: "country"; label: string }
-  | { kind: "canada" };
+  | { kind: "canada" }
+  | { kind: "usa" };
+
+function sortKeyForCountryEntry(e: CountryExampleSortEntry): string {
+  if (e.kind === "canada") return "Canada";
+  if (e.kind === "usa") return "United States";
+  return e.label;
+}
 
 function buildPerCountryIsoExampleTable(memberIso: Set<string>): string {
   const header = `Region\tCategory\tColor`;
   const entries: CountryExampleSortEntry[] = [];
   if (memberIso.has("CAN")) {
     entries.push({ kind: "canada" });
+  }
+  if (memberIso.has("USA")) {
+    entries.push({ kind: "usa" });
   }
 
   for (const [iso, label] of Object.entries(MAP_COUNTRY_ISO_A3_TO_NAME)) {
@@ -426,11 +479,9 @@ function buildPerCountryIsoExampleTable(memberIso: Set<string>): string {
   }
 
   const collator = new Intl.Collator("en", { sensitivity: "base" });
-  entries.sort((a, b) => {
-    const nameA = a.kind === "canada" ? "Canada" : a.label;
-    const nameB = b.kind === "canada" ? "Canada" : b.label;
-    return collator.compare(nameA, nameB);
-  });
+  entries.sort((a, b) =>
+    collator.compare(sortKeyForCountryEntry(a), sortKeyForCountryEntry(b)),
+  );
 
   const lines: string[] = [];
   for (let i = 0; i < entries.length; i++) {
@@ -439,6 +490,10 @@ function buildPerCountryIsoExampleTable(memberIso: Set<string>): string {
     if (entry.kind === "canada") {
       for (const prov of CANADA_REGION_NAMES) {
         lines.push(`${prov}\tCanada\t${color}`);
+      }
+    } else if (entry.kind === "usa") {
+      for (const state of US_ATLAS_REGION_NAMES) {
+        lines.push(`${state}\tUnited States\t${color}`);
       }
     } else {
       lines.push(`${entry.label}\t${entry.label}\t${color}`);
@@ -470,6 +525,48 @@ export function buildOifFrancophonieExampleTable(): string {
  */
 export function buildEuMemberExampleTable(): string {
   return buildPerCountryIsoExampleTable(EU_MEMBER_ISO_A3);
+}
+
+/**
+ * Example: NATO members coloured by accession year — category is the four-digit
+ * year; US states/territories and Canadian provinces use the same year as their
+ * country.
+ */
+export function buildNatoMemberExampleTable(): string {
+  const header = `Region\tCategory\tColor`;
+  const uniqueYears = [
+    ...new Set(Object.values(NATO_ACCESSION_YEAR)),
+  ].sort((a, b) => a - b);
+  const yearToColor = new Map<number, string>();
+  uniqueYears.forEach((y, i) => {
+    yearToColor.set(y, hslDistinct(i));
+  });
+
+  const lines: string[] = [];
+  const isos = [...NATO_MEMBER_ISO_A3].sort((a, b) => a.localeCompare(b));
+
+  for (const iso of isos) {
+    const year = NATO_ACCESSION_YEAR[iso];
+    if (year === undefined) continue;
+    const category = String(year);
+    const color = yearToColor.get(year)!;
+
+    if (iso === "CAN") {
+      for (const prov of CANADA_REGION_NAMES) {
+        lines.push(`${prov}\t${category}\t${color}`);
+      }
+    } else if (iso === "USA") {
+      for (const state of US_ATLAS_REGION_NAMES) {
+        lines.push(`${state}\t${category}\t${color}`);
+      }
+    } else {
+      const label = MAP_COUNTRY_ISO_A3_TO_NAME[iso];
+      if (!label) continue;
+      lines.push(`${label}\t${category}\t${color}`);
+    }
+  }
+
+  return [header, ...lines].join("\n");
 }
 
 const ASEAN_APEC_BOTH_CATEGORY = "ASEAN & APEC";

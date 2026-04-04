@@ -11,6 +11,7 @@ import {
   buildCommonwealthExampleTable,
   buildEuMemberExampleTable,
   buildGccOpecExampleTable,
+  buildNatoMemberExampleTable,
   buildOifFrancophonieExampleTable,
   buildRegionalNorthAmericaExampleTable,
 } from "@/data/exampleMaps";
@@ -183,6 +184,13 @@ export default function Home() {
                 className="w-full rounded-lg border border-zinc-300 bg-white px-3 py-2 text-left text-sm font-medium text-zinc-800 shadow-sm hover:bg-zinc-50 dark:border-zinc-600 dark:bg-zinc-900 dark:text-zinc-200 dark:hover:bg-zinc-800"
               >
                 GCC & OPEC — both, GCC-only, and OPEC-only
+              </button>
+              <button
+                type="button"
+                onClick={() => setText(buildNatoMemberExampleTable())}
+                className="w-full rounded-lg border border-zinc-300 bg-white px-3 py-2 text-left text-sm font-medium text-zinc-800 shadow-sm hover:bg-zinc-50 dark:border-zinc-600 dark:bg-zinc-900 dark:text-zinc-200 dark:hover:bg-zinc-800"
+              >
+                NATO — colour by year joined
               </button>
             </div>
             <p className="text-xs text-zinc-500 dark:text-zinc-400">
