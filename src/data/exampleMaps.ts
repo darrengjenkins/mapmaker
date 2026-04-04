@@ -67,6 +67,77 @@ const COMMONWEALTH_MEMBER_ISO_A3 = new Set([
   "ZWE",
 ]);
 
+/**
+ * OIF (Organisation internationale de la Francophonie): full member states and
+ * associate members that appear on our map layers. Excludes Mali, Burkina Faso,
+ * and Niger (announced withdrawal in 2025). Subnational OIF members (e.g.
+ * Quebec) are represented by colouring all of Canada.
+ */
+const OIF_FULL_MEMBER_ISO_A3 = new Set([
+  "ALB",
+  "AND",
+  "ARM",
+  "BEL",
+  "BEN",
+  "BGR",
+  "BDI",
+  "KHM",
+  "CMR",
+  "CAN",
+  "CPV",
+  "CAF",
+  "TCD",
+  "COM",
+  "COG",
+  "COD",
+  "CIV",
+  "CYP",
+  "DJI",
+  "DMA",
+  "EGY",
+  "GNQ",
+  "FRA",
+  "GAB",
+  "GHA",
+  "GRC",
+  "GIN",
+  "GNB",
+  "HTI",
+  "LAO",
+  "LBN",
+  "LUX",
+  "MKD",
+  "MDG",
+  "MRT",
+  "MDA",
+  "MCO",
+  "MAR",
+  "ROU",
+  "RWA",
+  "LCA",
+  "STP",
+  "SEN",
+  "CHE",
+  "TGO",
+  "TUN",
+  "VUT",
+  "VNM",
+]);
+
+/** Associate members of the OIF (sovereign states / jurisdictions on our map). */
+const OIF_ASSOCIATE_MEMBER_ISO_A3 = new Set([
+  "ARE",
+  "KOS",
+  "NCL",
+  "QAT",
+  "SRB",
+]);
+
+const OIF_MAP_ISO_A3 = new Set([
+  ...OIF_FULL_MEMBER_ISO_A3,
+  ...OIF_ASSOCIATE_MEMBER_ISO_A3,
+]);
+
 const MAP_COUNTRY_ISO_A3_TO_NAME: Record<string, string> = {
   ...AMERICAS_COUNTRY_ISO_A3_TO_NAME,
   ...CARIBBEAN_COUNTRY_ISO_A3_TO_NAME,
@@ -234,20 +305,19 @@ export function buildRegionalNorthAmericaExampleTable(): string {
   return [header, ...lines].join("\n");
 }
 
-type CommonwealthSortEntry =
+type CountryExampleSortEntry =
   | { kind: "country"; label: string }
   | { kind: "canada" };
 
-/**
- * Example: one distinct colour per sovereign Commonwealth member on this map.
- * Only those countries appear in the table — everything else stays the default map fill.
- */
-export function buildCommonwealthExampleTable(): string {
+function buildPerCountryIsoExampleTable(memberIso: Set<string>): string {
   const header = `Region\tCategory\tColor`;
-  const entries: CommonwealthSortEntry[] = [{ kind: "canada" }];
+  const entries: CountryExampleSortEntry[] = [];
+  if (memberIso.has("CAN")) {
+    entries.push({ kind: "canada" });
+  }
 
   for (const [iso, label] of Object.entries(MAP_COUNTRY_ISO_A3_TO_NAME)) {
-    if (!COMMONWEALTH_MEMBER_ISO_A3.has(iso)) continue;
+    if (!memberIso.has(iso)) continue;
     entries.push({ kind: "country", label });
   }
 
@@ -272,4 +342,20 @@ export function buildCommonwealthExampleTable(): string {
   }
 
   return [header, ...lines].join("\n");
+}
+
+/**
+ * Example: one distinct colour per sovereign Commonwealth member on this map.
+ * Only those countries appear in the table — everything else stays the default map fill.
+ */
+export function buildCommonwealthExampleTable(): string {
+  return buildPerCountryIsoExampleTable(COMMONWEALTH_MEMBER_ISO_A3);
+}
+
+/**
+ * Example: OIF members and associates on this map — one colour per country
+ * (all Canadian provinces share Canada’s colour). Observers omitted.
+ */
+export function buildOifFrancophonieExampleTable(): string {
+  return buildPerCountryIsoExampleTable(OIF_MAP_ISO_A3);
 }
