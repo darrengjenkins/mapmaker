@@ -56,18 +56,49 @@ export default function Home() {
               Create your own color coded maps in seconds
             </p>
           </div>
-          <p className="max-w-2xl text-sm leading-relaxed text-zinc-600 dark:text-zinc-400">
-            Paste a table with three columns: region (state, province, or
-            country), a short category label, and a CSS color (for example hex,{" "}
-            <code className="rounded bg-zinc-200 px-1 py-0.5 text-xs dark:bg-zinc-800">
-              rgb()
-            </code>
-            , or color names). Tabs, commas, or spaces work between columns.
-            US states (including DC and territories on the map), Canadian
-            provinces and territories,             Mexican states, Central American, Caribbean, and South
-            American countries, European, Asian, African, and Oceania countries
-            (whole country, not subdivisions) are supported.
-          </p>
+          <div className="max-w-2xl space-y-3 text-sm leading-relaxed text-zinc-600 dark:text-zinc-400">
+            <ol className="list-decimal space-y-2 pl-5">
+              <li className="pl-1">
+                Select an example map below that is similar to what you would
+                like to map.
+              </li>
+              <li className="pl-1">
+                Copy and paste the data table into Excel or Google Sheets.
+              </li>
+              <li className="pl-1">
+                Edit the colors and categories in Excel or Google Sheets. You can
+                add and remove rows. You can express colors with hex (
+                <code className="rounded bg-zinc-200 px-1 py-0.5 text-xs dark:bg-zinc-800">
+                  #be123c
+                </code>
+                ), a name (
+                <code className="rounded bg-zinc-200 px-1 py-0.5 text-xs dark:bg-zinc-800">
+                  red
+                </code>
+                ), HSL (
+                <code className="rounded bg-zinc-200 px-1 py-0.5 text-xs dark:bg-zinc-800">
+                  hsl(350 100% 40%)
+                </code>
+                ), or RGB (
+                <code className="rounded bg-zinc-200 px-1 py-0.5 text-xs dark:bg-zinc-800">
+                  rgb(255 0 0)
+                </code>
+                ).
+              </li>
+              <li className="pl-1">
+                Copy from Excel or Google Sheets back into the data table. Clear
+                out the old contents before pasting.
+              </li>
+            </ol>
+            <p className="text-xs leading-relaxed text-zinc-500 dark:text-zinc-400">
+              Each row needs three columns: region, category, and color. Use
+              tabs, commas, or spaces between columns. Regions can be US states
+              and territories on the map, Canadian provinces and territories,
+              Mexican states, Central American, Caribbean, and South American
+              countries, and European, Asian, African, and Oceania countries
+              (whole country, not subdivisions).
+            </p>
+          </div>
         </header>
 
         <div className="grid gap-8 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.2fr)]">
