@@ -213,6 +213,35 @@ const APEC_MEMBER_ISO_A3 = new Set([
   "VNM",
 ]);
 
+/** Gulf Cooperation Council member states. */
+const GCC_MEMBER_ISO_A3 = new Set([
+  "SAU",
+  "ARE",
+  "KWT",
+  "QAT",
+  "BHR",
+  "OMN",
+]);
+
+/**
+ * OPEC member countries (12 as of 2024–2026). Angola withdrew 2024; Qatar left
+ * 2019. Names match `MAP_COUNTRY_ISO_A3_TO_NAME` (Congo = Republic of the Congo).
+ */
+const OPEC_MEMBER_ISO_A3 = new Set([
+  "DZA",
+  "COG",
+  "GNQ",
+  "GAB",
+  "IRN",
+  "IRQ",
+  "KWT",
+  "LBY",
+  "NGA",
+  "SAU",
+  "ARE",
+  "VEN",
+]);
+
 const MAP_COUNTRY_ISO_A3_TO_NAME: Record<string, string> = {
   ...AMERICAS_COUNTRY_ISO_A3_TO_NAME,
   ...CARIBBEAN_COUNTRY_ISO_A3_TO_NAME,
@@ -495,6 +524,56 @@ export function buildAseanApecExampleTable(): string {
   }
   for (const name of MEXICO_REGION_NAMES) {
     pushRow(name, "apec_only");
+  }
+
+  return [header, ...lines].join("\n");
+}
+
+const GCC_OPEC_BOTH_CATEGORY = "GCC & OPEC";
+const GCC_OPEC_BOTH_COLOR = "#4338ca";
+const GCC_ONLY_CATEGORY = "GCC only";
+const GCC_ONLY_COLOR = "#0d9488";
+const OPEC_ONLY_CATEGORY = "OPEC only";
+const OPEC_ONLY_COLOR = "#d97706";
+
+function gccOpecClassify(
+  iso: string,
+): "both" | "gcc_only" | "opec_only" | null {
+  const g = GCC_MEMBER_ISO_A3.has(iso);
+  const o = OPEC_MEMBER_ISO_A3.has(iso);
+  if (g && o) return "both";
+  if (g) return "gcc_only";
+  if (o) return "opec_only";
+  return null;
+}
+
+/**
+ * GCC vs OPEC overlap: three colours for both, GCC-only (e.g. Bahrain, Oman,
+ * Qatar), and OPEC-only. Uses current OPEC membership excluding Angola
+ * (withdrew 2024) and Qatar (left OPEC 2019; remains in GCC).
+ */
+export function buildGccOpecExampleTable(): string {
+  const header = `Region\tCategory\tColor`;
+  const lines: string[] = [];
+
+  const pushRow = (
+    region: string,
+    kind: "both" | "gcc_only" | "opec_only",
+  ) => {
+    if (kind === "both") {
+      lines.push(
+        `${region}\t${GCC_OPEC_BOTH_CATEGORY}\t${GCC_OPEC_BOTH_COLOR}`,
+      );
+    } else if (kind === "gcc_only") {
+      lines.push(`${region}\t${GCC_ONLY_CATEGORY}\t${GCC_ONLY_COLOR}`);
+    } else {
+      lines.push(`${region}\t${OPEC_ONLY_CATEGORY}\t${OPEC_ONLY_COLOR}`);
+    }
+  };
+
+  for (const [iso, label] of Object.entries(MAP_COUNTRY_ISO_A3_TO_NAME)) {
+    const k = gccOpecClassify(iso);
+    if (k) pushRow(label, k);
   }
 
   return [header, ...lines].join("\n");
