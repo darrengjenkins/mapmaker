@@ -60,7 +60,7 @@ export default function Home() {
             , or color names). Tabs, commas, or spaces work between columns.
             US states (including DC and territories on the map), Canadian
             provinces and territories, Mexican states, Central and South
-            American countries, European countries, and Asian countries (whole
+            American countries, European, Asian, and African countries (whole
             country, not subdivisions) are supported.
           </p>
         </header>
@@ -96,7 +96,7 @@ export default function Home() {
               >
                 Fill by region group — US blue, Canada red, Mexico green,
                 Central America orange, South America purple, Europe cyan,
-                Asia rose
+                Asia rose, Africa emerald
               </button>
             </div>
             <p className="text-xs text-zinc-500 dark:text-zinc-400">
