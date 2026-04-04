@@ -6,7 +6,10 @@ import {
   buildCountryColoredRegionTable,
   buildFullRegionTable,
 } from "@/data/allNaRegions";
-import { buildRegionalNorthAmericaExampleTable } from "@/data/exampleMaps";
+import {
+  buildCommonwealthExampleTable,
+  buildRegionalNorthAmericaExampleTable,
+} from "@/data/exampleMaps";
 import { parseTable } from "@/lib/parseTable";
 
 const EXAMPLE = `Region	Category	Color
@@ -109,7 +112,14 @@ export default function Home() {
                 onClick={() => setText(buildRegionalNorthAmericaExampleTable())}
                 className="w-full rounded-lg border border-zinc-300 bg-white px-3 py-2 text-left text-sm font-medium text-zinc-800 shadow-sm hover:bg-zinc-50 dark:border-zinc-600 dark:bg-zinc-900 dark:text-zinc-200 dark:hover:bg-zinc-800"
               >
-                US & Canada — traditional regions (New England, Midwest, etc.)
+                US & Canada — Regions (New England, Midwest, etc.)
+              </button>
+              <button
+                type="button"
+                onClick={() => setText(buildCommonwealthExampleTable())}
+                className="w-full rounded-lg border border-zinc-300 bg-white px-3 py-2 text-left text-sm font-medium text-zinc-800 shadow-sm hover:bg-zinc-50 dark:border-zinc-600 dark:bg-zinc-900 dark:text-zinc-200 dark:hover:bg-zinc-800"
+              >
+                Commonwealth — one colour per member country
               </button>
             </div>
             <p className="text-xs text-zinc-500 dark:text-zinc-400">
