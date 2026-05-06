@@ -20,6 +20,8 @@ const CA_GEO =
 
 /** Geographic center for initial view (lon, lat) — framed for North America through South America. */
 const MAP_CENTER: [number, number] = [-88, 16];
+/** Mercator scale; bumped ~30% so landmass fills more of the SVG frame at 880×560. */
+const MAP_PROJECTION_SCALE = 416;
 const ZOOM_MIN = 0.4;
 const ZOOM_MAX = 12;
 
@@ -164,7 +166,7 @@ export function NorthAmericaMap({ rows }: NorthAmericaMapProps) {
           projection="geoMercator"
           projectionConfig={{
             center: MAP_CENTER,
-            scale: 320,
+            scale: MAP_PROJECTION_SCALE,
           }}
           width={880}
           height={560}
