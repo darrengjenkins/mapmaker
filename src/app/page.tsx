@@ -105,7 +105,7 @@ export default function Home() {
           </div>
         </header>
 
-        <div className="grid gap-8 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.2fr)]">
+        <div className="flex flex-col gap-8">
           <div className="flex flex-col gap-3">
             <label
               htmlFor="table-input"
@@ -139,91 +139,93 @@ export default function Home() {
                 Europe cyan, Asia rose, Africa emerald, Oceania sky blue
               </button>
             </div>
-            <div className="space-y-2">
-              <p className="text-xs font-medium uppercase tracking-wide text-zinc-500 dark:text-zinc-400">
-                Examples
-              </p>
-              <button
-                type="button"
-                onClick={() => setText(buildRegionalNorthAmericaExampleTable())}
-                className="w-full rounded-lg border border-zinc-300 bg-white px-3 py-2 text-left text-sm font-medium text-zinc-800 shadow-sm hover:bg-zinc-50 dark:border-zinc-600 dark:bg-zinc-900 dark:text-zinc-200 dark:hover:bg-zinc-800"
-              >
-                US & Canada — Regions (New England, Midwest, etc.)
-              </button>
-              <button
-                type="button"
-                onClick={() => setText(buildCommonwealthExampleTable())}
-                className="w-full rounded-lg border border-zinc-300 bg-white px-3 py-2 text-left text-sm font-medium text-zinc-800 shadow-sm hover:bg-zinc-50 dark:border-zinc-600 dark:bg-zinc-900 dark:text-zinc-200 dark:hover:bg-zinc-800"
-              >
-                Commonwealth — one colour per member country
-              </button>
-              <button
-                type="button"
-                onClick={() => setText(buildOifFrancophonieExampleTable())}
-                className="w-full rounded-lg border border-zinc-300 bg-white px-3 py-2 text-left text-sm font-medium text-zinc-800 shadow-sm hover:bg-zinc-50 dark:border-zinc-600 dark:bg-zinc-900 dark:text-zinc-200 dark:hover:bg-zinc-800"
-              >
-                OIF La Francophonie — full & associate members on the map
-              </button>
-              <button
-                type="button"
-                onClick={() => setText(buildEuMemberExampleTable())}
-                className="w-full rounded-lg border border-zinc-300 bg-white px-3 py-2 text-left text-sm font-medium text-zinc-800 shadow-sm hover:bg-zinc-50 dark:border-zinc-600 dark:bg-zinc-900 dark:text-zinc-200 dark:hover:bg-zinc-800"
-              >
-                European Union — one colour per member state
-              </button>
-              <button
-                type="button"
-                onClick={() => setText(buildAseanApecExampleTable())}
-                className="w-full rounded-lg border border-zinc-300 bg-white px-3 py-2 text-left text-sm font-medium text-zinc-800 shadow-sm hover:bg-zinc-50 dark:border-zinc-600 dark:bg-zinc-900 dark:text-zinc-200 dark:hover:bg-zinc-800"
-              >
-                ASEAN & APEC — both, ASEAN-only, and APEC-only
-              </button>
-              <button
-                type="button"
-                onClick={() => setText(buildGccOpecExampleTable())}
-                className="w-full rounded-lg border border-zinc-300 bg-white px-3 py-2 text-left text-sm font-medium text-zinc-800 shadow-sm hover:bg-zinc-50 dark:border-zinc-600 dark:bg-zinc-900 dark:text-zinc-200 dark:hover:bg-zinc-800"
-              >
-                GCC & OPEC — both, GCC-only, and OPEC-only
-              </button>
-              <button
-                type="button"
-                onClick={() => setText(buildNatoMemberExampleTable())}
-                className="w-full rounded-lg border border-zinc-300 bg-white px-3 py-2 text-left text-sm font-medium text-zinc-800 shadow-sm hover:bg-zinc-50 dark:border-zinc-600 dark:bg-zinc-900 dark:text-zinc-200 dark:hover:bg-zinc-800"
-              >
-                NATO — colour by year joined
-              </button>
-            </div>
             <p className="text-xs text-zinc-500 dark:text-zinc-400">
               {rows.length} row{rows.length === 1 ? "" : "s"} parsed
               {rows.length === 0 && text.trim().length > 0
                 ? " — check that each line has three values."
                 : ""}
             </p>
-            {legend.length > 0 && (
-              <div className="rounded-lg border border-zinc-200 bg-white p-4 dark:border-zinc-800 dark:bg-zinc-900">
-                <p className="mb-2 text-xs font-medium uppercase tracking-wide text-zinc-500 dark:text-zinc-400">
-                  Legend
-                </p>
-                <ul className="flex flex-wrap gap-3 text-sm">
-                  {legend.map((item) => (
-                    <li
-                      key={`${item.category}-${item.color}`}
-                      className="flex items-center gap-2"
-                    >
-                      <span
-                        className="size-4 shrink-0 rounded border border-zinc-300 dark:border-zinc-600"
-                        style={{ backgroundColor: item.color }}
-                        aria-hidden
-                      />
-                      <span>{item.category}</span>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            )}
           </div>
 
           <NorthAmericaMap rows={rows} />
+
+          {legend.length > 0 && (
+            <div className="rounded-lg border border-zinc-200 bg-white p-4 dark:border-zinc-800 dark:bg-zinc-900">
+              <p className="mb-2 text-xs font-medium uppercase tracking-wide text-zinc-500 dark:text-zinc-400">
+                Legend
+              </p>
+              <ul className="flex flex-wrap gap-3 text-sm">
+                {legend.map((item) => (
+                  <li
+                    key={`${item.category}-${item.color}`}
+                    className="flex items-center gap-2"
+                  >
+                    <span
+                      className="size-4 shrink-0 rounded border border-zinc-300 dark:border-zinc-600"
+                      style={{ backgroundColor: item.color }}
+                      aria-hidden
+                    />
+                    <span>{item.category}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
+
+          <div className="space-y-2">
+            <p className="text-xs font-medium uppercase tracking-wide text-zinc-500 dark:text-zinc-400">
+              Examples
+            </p>
+            <button
+              type="button"
+              onClick={() => setText(buildRegionalNorthAmericaExampleTable())}
+              className="w-full rounded-lg border border-zinc-300 bg-white px-3 py-2 text-left text-sm font-medium text-zinc-800 shadow-sm hover:bg-zinc-50 dark:border-zinc-600 dark:bg-zinc-900 dark:text-zinc-200 dark:hover:bg-zinc-800"
+            >
+              US & Canada — Regions (New England, Midwest, etc.)
+            </button>
+            <button
+              type="button"
+              onClick={() => setText(buildCommonwealthExampleTable())}
+              className="w-full rounded-lg border border-zinc-300 bg-white px-3 py-2 text-left text-sm font-medium text-zinc-800 shadow-sm hover:bg-zinc-50 dark:border-zinc-600 dark:bg-zinc-900 dark:text-zinc-200 dark:hover:bg-zinc-800"
+            >
+              Commonwealth — one colour per member country
+            </button>
+            <button
+              type="button"
+              onClick={() => setText(buildOifFrancophonieExampleTable())}
+              className="w-full rounded-lg border border-zinc-300 bg-white px-3 py-2 text-left text-sm font-medium text-zinc-800 shadow-sm hover:bg-zinc-50 dark:border-zinc-600 dark:bg-zinc-900 dark:text-zinc-200 dark:hover:bg-zinc-800"
+            >
+              OIF La Francophonie — full & associate members on the map
+            </button>
+            <button
+              type="button"
+              onClick={() => setText(buildEuMemberExampleTable())}
+              className="w-full rounded-lg border border-zinc-300 bg-white px-3 py-2 text-left text-sm font-medium text-zinc-800 shadow-sm hover:bg-zinc-50 dark:border-zinc-600 dark:bg-zinc-900 dark:text-zinc-200 dark:hover:bg-zinc-800"
+            >
+              European Union — one colour per member state
+            </button>
+            <button
+              type="button"
+              onClick={() => setText(buildAseanApecExampleTable())}
+              className="w-full rounded-lg border border-zinc-300 bg-white px-3 py-2 text-left text-sm font-medium text-zinc-800 shadow-sm hover:bg-zinc-50 dark:border-zinc-600 dark:bg-zinc-900 dark:text-zinc-200 dark:hover:bg-zinc-800"
+            >
+              ASEAN & APEC — both, ASEAN-only, and APEC-only
+            </button>
+            <button
+              type="button"
+              onClick={() => setText(buildGccOpecExampleTable())}
+              className="w-full rounded-lg border border-zinc-300 bg-white px-3 py-2 text-left text-sm font-medium text-zinc-800 shadow-sm hover:bg-zinc-50 dark:border-zinc-600 dark:bg-zinc-900 dark:text-zinc-200 dark:hover:bg-zinc-800"
+            >
+              GCC & OPEC — both, GCC-only, and OPEC-only
+            </button>
+            <button
+              type="button"
+              onClick={() => setText(buildNatoMemberExampleTable())}
+              className="w-full rounded-lg border border-zinc-300 bg-white px-3 py-2 text-left text-sm font-medium text-zinc-800 shadow-sm hover:bg-zinc-50 dark:border-zinc-600 dark:bg-zinc-900 dark:text-zinc-200 dark:hover:bg-zinc-800"
+            >
+              NATO — colour by year joined
+            </button>
+          </div>
         </div>
       </div>
     </div>
